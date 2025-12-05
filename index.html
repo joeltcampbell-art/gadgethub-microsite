@@ -4,147 +4,365 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gadget Hub HQ</title>
-
   <style>
+    :root {
+      --bg: #000000;
+      --panel: #050708;
+      --panel-soft: #0b0f12;
+      --border-subtle: #1f2933;
+      --accent: #00c7ff;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(180deg, #0a0f1a 0%, #0e141f 100%);
-      font-family: "Inter", Arial, sans-serif;
-      color: #d9e2ec;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 32px;
-      border-radius: 18px;
-      background: rgba(12, 18, 28, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 50px rgba(0, 200, 255, 0.1);
-    }
-
-    header {
+      min-height: 100vh;
       display: flex;
+      justify-content: center;
+      padding: 24px 12px 32px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(0,199,255,0.12) 0, transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,0,0,1) 0, #020617 55%);
+      color: var(--text);
+    }
+    main.shell {
+      width: 100%;
+      max-width: 480px;
+    }
+    .card {
+      background: linear-gradient(145deg, var(--panel-soft), var(--panel));
+      border-radius: 30px;
+      padding: 18px 16px 20px;
+      box-shadow:
+        0 28px 80px rgba(0,0,0,0.95),
+        0 0 0 1px rgba(15,23,42,0.9);
+    }
+    .header {
+      display: flex;
+      gap: 14px;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
-
-    header img {
-      width: 70px;
-      height: 70px;
-      border-radius: 4px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      color: #e5f4ff;
-      font-weight: 700;
-      text-shadow: 0 0 15px rgba(0, 200, 255, 0.5);
-    }
-
-    header p {
-      margin: 0;
-      margin-top: 4px;
-      color: #9fb3c8;
-      font-size: 14px;
-    }
-
-    .section-title {
-      font-size: 14px;
-      color: #7a8aa0;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      margin-top: 28px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    /* Featured block */
-    .featured {
-      background: rgba(15, 22, 35, 0.8);
-      padding: 20px;
+    .logo-wrap {
+      width: 54px;
+      height: 54px;
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-
-    .featured-thumb {
-      width: 120px;
-      height: 120px;
-      background: rgba(0, 200, 255, 0.08);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 13px;
-      text-align: center;
+      background: radial-gradient(circle at 30% 0, rgba(0,199,255,0.65), rgba(0,0,0,0.9));
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #9bdcff;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(148,163,184,0.45),
+        0 14px 32px rgba(0,0,0,0.9);
     }
-
-    .featured-title {
-      font-size: 17px;
-      font-weight: 600;
+    .logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .title-block h1 {
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      margin-bottom: 2px;
+    }
+    .title-block p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,199,255,0.5);
+      background: radial-gradient(circle at top left, rgba(0,199,255,0.25), transparent 60%);
+      font-size: 11px;
+      color: #e0f7ff;
+      margin-bottom: 10px;
+    }
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0,199,255,0.32);
+    }
+    .featured {
+      border-radius: 22px;
+      padding: 13px 13px 14px;
+      background:
+        radial-gradient(circle at top left, rgba(0,199,255,0.14), transparent 70%),
+        linear-gradient(145deg, #020617, #020617);
+      border: 1px solid rgba(31,41,55,0.95);
+      margin-bottom: 16px;
+      box-shadow: 0 22px 50px rgba(0,0,0,0.9);
+    }
+    .featured-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
       margin-bottom: 6px;
-      color: #e5f4ff;
     }
-
-    .featured-desc {
-      font-size: 13px;
-      color: #a8c4d8;
-      margin-bottom: 12px;
-      line-height: 1.4;
+    .featured-main {
+      display: flex;
+      gap: 12px;
+      align-items: center;
     }
-
-    .featured-cta {
-      display: inline-block;
-      background: #00c7ff;
-      color: #000;
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
+    .featured-thumb {
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 30% 0, rgba(0,199,255,0.28), transparent 65%),
+        linear-gradient(145deg, #020617, #020617);
+      border: 1px solid rgba(51,65,85,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      font-size: 11px;
+      text-align: center;
+      color: #e5f7ff;
+    }
+    .featured-text {
+      flex: 1;
+    }
+    .featured-title {
       font-size: 14px;
-      transition: 0.2s ease;
+      font-weight: 600;
+      margin-bottom: 3px;
     }
-
-    .featured-cta:hover {
-      background: #14d3ff;
+    .featured-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
-
-    /* Grid cards */
+    .featured-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      background: linear-gradient(135deg, #00c7ff, #4de1ff);
+      color: #020617;
+      box-shadow:
+        0 12px 30px rgba(0,199,255,0.7),
+        0 0 0 1px rgba(15,23,42,0.9);
+    }
+    .featured-cta span {
+      margin-left: 6px;
+      font-size: 12px;
+    }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      margin-top: 2px;
+    }
+    .section-title h2 {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-title span {
+      font-size: 11px;
+      color: #6b7280;
+    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
     }
-
-    .card {
-      background: rgba(15, 22, 35, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 14px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.2s ease;
+    .product {
+      border-radius: 18px;
+      padding: 8px 7px 9px;
+      background:
+        radial-gradient(circle at top, rgba(0,199,255,0.10), transparent 70%),
+        linear-gradient(145deg, #020617, #020617);
+      border: 1px solid rgba(31,41,55,0.95);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.85);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--text);
+      min-height: 96px;
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, border-color 0.14s ease-out;
     }
-
-    .card:hover {
-      background: rgba(0, 200, 255, 0.06);
-      border-color: rgba(0, 200, 255, 0.25);
+    .product:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+      border-color: rgba(0,199,255,0.8);
     }
-
-    .card-category {
-      font-size: 11px;
-      color: #7ab8d4;
-      margin-bottom: 4px;
+    .product-tag {
+      font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.16em;
+      color: #38bdf8;
+      margin-bottom: 3px;
     }
+    .product-title {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+    .product-meta {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: auto;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .footer span {
+      color: var(--accent);
+    }
+    @media (max-width: 480px) {
+      .card { padding: 16px 13px 18px; }
+      .header { margin-bottom: 12px; }
+      .featured-main { gap: 10px; }
+      .grid { gap: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="card">
+      <header class="header">
+        <div class="logo-wrap">
+          <!-- Save your logo as logo.jpg in this folder -->
+          <img src="logo.jpg" alt="Gadget Hub logo" />
+        </div>
+        <div class="title-block">
+          <h1>Gadget Hub HQ</h1>
+          <p>Smart Amazon finds for real-life upgrades.</p>
+        </div>
+      </header>
 
-    .card-title {
-      font-si
+      <div class="pill">
+        <div class="pill-dot"></div>
+        Today&apos;s Featured Product
+      </div>
+
+      <article class="featured">
+        <div class="featured-label">Today’s Featured Product</div>
+        <div class="featured-main">
+          <div class="featured-thumb">
+            Drop a short headline here about your #1 item.
+          </div>
+          <div class="featured-text">
+            <div class="featured-title">
+              Replace this line with your current hero product title.
+            </div>
+            <p class="featured-desc">
+              Swap this description and the button link every time you post a new TikTok video.
+            </p>
+            <a class="featured-cta" href="https://example.com" target="_blank" rel="noopener noreferrer">
+              Shop this product <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <div class="section-title">
+        <h2>Trending Amazon Products</h2>
+        <span>Tap any card to shop</span>
+      </div>
+
+      <section class="grid">
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Kitchen</div>
+          <div class="product-title">
+            Swap with Product 1 title.
+          </div>
+          <div class="product-meta">Daily essential · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Home</div>
+          <div class="product-title">
+            Swap with Product 2 title.
+          </div>
+          <div class="product-meta">Clutter-saver · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Bathroom</div>
+          <div class="product-title">
+            Swap with Product 3 title.
+          </div>
+          <div class="product-meta">Upgrade · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Kitchen</div>
+          <div class="product-title">
+            Swap with Product 4 title.
+          </div>
+          <div class="product-meta">Daily essential · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Home</div>
+          <div class="product-title">
+            Swap with Product 5 title.
+          </div>
+          <div class="product-meta">Organizer · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Bathroom</div>
+          <div class="product-title">
+            Swap with Product 6 title.
+          </div>
+          <div class="product-meta">Upgrade · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Kitchen</div>
+          <div class="product-title">
+            Swap with Product 7 title.
+          </div>
+          <div class="product-meta">Time-saver · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Home</div>
+          <div class="product-title">
+            Swap with Product 8 title.
+          </div>
+          <div class="product-meta">Storage · Amazon</div>
+        </a>
+
+        <a class="product" href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <div class="product-tag">Bathroom</div>
+          <div class="product-title">
+            Swap with Product 9 title.
+          </div>
+          <div class="product-meta">Daily upgrade · Amazon</div>
+        </a>
+      </section>
+
+      <footer class="footer">
+        Built for <span>@holidaygadgethub</span> · Auto-updated from Google Sheets.
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
