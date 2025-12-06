@@ -8,273 +8,255 @@
   <style>
     :root {
       --brand-cyan: #00c7ff;
-      --bg: #020613;
-      --card: #07111f;
-      --card-soft: #050b16;
+      --bg: #020617;
+      --bg-soft: #050b16;
+      --card: #020818;
+      --border: rgba(148, 163, 184, 0.35);
       --text-main: #f9fafb;
       --text-sub: #9ca3af;
-      --accent: #00c7ff;
-      --radius-xl: 18px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing:border-box; margin:0; padding:0; }
     body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #041121 0, #020613 45%, #000 100%);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      padding: 24px 12px 40px;
+      min-height:100vh;
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #000 55%);
+      color:var(--text-main);
+      display:flex;
+      justify-content:center;
+      padding:24px 12px 40px;
     }
-    .page {
-      width: 100%;
-      max-width: 850px;
-      background: linear-gradient(145deg, #020613, #050b16);
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-      padding: 24px 22px 28px;
+    .shell {
+      width:100%;
+      max-width:880px;
+      border-radius:26px;
+      background:linear-gradient(145deg,#020617,#050b16);
+      border:1px solid var(--border);
+      box-shadow:0 32px 80px rgba(0,0,0,0.7);
+      padding:22px 22px 26px;
     }
     header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    header .logo-wrap {
+      width:56px;
+      height:56px;
+      border-radius:16px;
+      padding:2px;
+      background:radial-gradient(circle at top,#00c7ff,#020617);
+      box-shadow:0 0 0 1px rgba(15,23,42,0.9);
     }
     header img {
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
-      object-fit: cover;
-      box-shadow: 0 0 0 2px rgba(0,199,255,0.45);
+      width:100%;
+      height:100%;
+      border-radius:14px;
+      object-fit:contain;
+      background:#000;
     }
     header h1 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
+      font-size:22px;
+      letter-spacing:0.04em;
+      font-weight:700;
     }
     header p {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-top: 3px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.3);
-      background: radial-gradient(circle at left, rgba(0,199,255,0.35), rgba(15,23,42,0.9));
-      margin-bottom: 14px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-main);
-    }
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(0,199,255,0.8);
+      font-size:13px;
+      color:var(--text-sub);
+      margin-top:3px;
     }
 
-    .featured-card {
-      border-radius: 22px;
-      padding: 18px 18px 16px;
-      background: radial-gradient(circle at top left, rgba(0,199,255,0.3), #020617 45%, #000 100%);
-      border: 1px solid rgba(148,163,184,0.3);
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 14px;
-      margin-bottom: 26px;
+    /* Featured */
+    .featured {
+      border-radius:22px;
+      padding:18px 18px 16px;
+      background:radial-gradient(circle at top left,rgba(0,199,255,0.3),#020617 40%,#000 100%);
+      border:1px solid var(--border);
+      display:grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
+      gap:18px;
+      margin-bottom:26px;
     }
-    .featured-chip {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent);
-      margin-bottom: 6px;
+    .featured-left-label {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--text-sub);
+      margin-bottom:6px;
+    }
+    .featured-title {
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:6px;
     }
     .featured-headline {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 6px;
+      font-size:13px;
+      color:var(--text-sub);
+      margin-bottom:12px;
     }
-    .featured-desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-bottom: 12px;
+    .btn-primary {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:600;
+      color:#020617;
+      background:linear-gradient(135deg,#00c7ff,#46e3ff);
+      text-decoration:none;
+      box-shadow:0 14px 32px rgba(0,199,255,0.6);
     }
-    .featured-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 16px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, var(--accent), #40e0ff);
-      color: #020617;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 10px 24px rgba(0,199,255,0.5);
-    }
-    .featured-btn span {
-      display: inline-block;
-      margin-left: 6px;
-      font-size: 11px;
-    }
-    .featured-side {
-      border-radius: 16px;
-      background: radial-gradient(circle at top, rgba(0,199,255,0.2), #020617 70%);
-      border: 1px dashed rgba(148,163,184,0.35);
-      padding: 10px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-    .featured-side strong {
-      display: block;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 10px;
-      color: var(--accent);
+    .btn-primary span {
+      font-size:11px;
+      margin-left:6px;
     }
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
+    .featured-right {
+      border-radius:16px;
+      border:1px dashed rgba(148,163,184,0.45);
+      background:radial-gradient(circle at top,rgba(0,199,255,0.18),#020617 70%);
+      padding:14px 10px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:8px;
     }
-    .section-header h2 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-sub);
+    .featured-right-label {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      color:#00c7ff;
     }
-    .section-header span {
-      font-size: 11px;
-      color: var(--text-sub);
+    .featured-right p {
+      font-size:12px;
+      color:var(--text-sub);
     }
 
+    /* Section header */
+    .section-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      margin-bottom:10px;
+    }
+    .section-row h2 {
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--text-sub);
+    }
+    .section-row span {
+      font-size:11px;
+      color:var(--text-sub);
+    }
+
+    /* Grid */
     .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 10px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
     }
     .card {
-      border-radius: 16px;
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), #020617);
-      border: 1px solid rgba(31,41,55,0.9);
-      padding: 10px 10px 11px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 94px;
+      border-radius:16px;
+      background:radial-gradient(circle at top left,#020818,#000);
+      border:1px solid rgba(31,41,55,0.95);
+      padding:10px 10px 11px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:96px;
     }
-    .card-top {
-      margin-bottom: 10px;
-    }
+    .card-top { margin-bottom:10px; }
     .card-category {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent);
-      margin-bottom: 4px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:#00c7ff;
+      margin-bottom:4px;
     }
     .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:4px;
     }
     .card-tagline {
-      font-size: 11px;
-      color: var(--text-sub);
+      font-size:11px;
+      color:var(--text-sub);
     }
     .card-link {
-      font-size: 11px;
-      color: var(--accent);
-      text-decoration: none;
-      align-self: flex-start;
+      font-size:11px;
+      color:#00c7ff;
+      text-decoration:none;
+      align-self:flex-start;
     }
+    .card-link:hover { text-decoration:underline; }
+
     .footer {
-      margin-top: 18px;
-      font-size: 11px;
-      color: var(--text-sub);
-      text-align: center;
+      margin-top:18px;
+      font-size:11px;
+      color:var(--text-sub);
+      text-align:center;
     }
     .footer a {
-      color: var(--accent);
-      text-decoration: none;
+      color:#00c7ff;
+      text-decoration:none;
     }
 
-    @media (max-width: 640px) {
-      .featured-card {
-        grid-template-columns: 1fr;
-      }
-      .grid {
-        grid-template-columns: repeat(2, minmax(0,1fr));
-      }
+    @media (max-width:720px) {
+      .featured { grid-template-columns:1fr; }
+      .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: minmax(0,1fr); }
+    @media (max-width:520px) {
+      .grid { grid-template-columns:minmax(0,1fr); }
+      .shell { padding:18px 16px 22px; }
     }
   </style>
 </head>
 <body>
-  <main class="page">
+  <div class="shell">
     <header>
-      <img src="logo.jpg" alt="Gadget Hub logo" />
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Gadget Hub logo" />
+      </div>
       <div>
         <h1>Gadget Hub HQ</h1>
         <p>Smart Amazon finds for real-life upgrades.</p>
       </div>
     </header>
 
-    <div class="pill">
-      <div class="pill-dot"></div>
-      <span>Today’s Featured Product</span>
-    </div>
-
-    <section class="featured-card">
+    <!-- Featured -->
+    <section class="featured">
       <div>
-        <div class="featured-chip">Today’s Featured Product</div>
-        <h2 id="featured_title" class="featured-headline">
+        <div class="featured-left-label">Today’s Featured Product</div>
+        <h2 id="featured_title" class="featured-title">
           Replace this line with your current hero product title.
         </h2>
-        <p id="featured_headline" class="featured-desc">
+        <p id="featured_headline" class="featured-headline">
           Swap this description and the button link every time you post a new TikTok video.
         </p>
-        <a id="featured_url" href="#" class="featured-btn">
+        <a id="featured_url" href="#" class="btn-primary">
           Shop this product
           <span>➜</span>
         </a>
       </div>
-      <div class="featured-side">
-        <strong>Swipe-stopper</strong>
+      <div class="featured-right">
+        <div class="featured-right-label">Swipe-stopper</div>
         <p>Drop a short headline here about your #1 item.</p>
       </div>
     </section>
 
-    <div class="section-header">
+    <!-- Trending -->
+    <div class="section-row">
       <h2>Trending Amazon Products</h2>
       <span>Tap any card to shop</span>
     </div>
 
-    <section class="grid" id="trending-grid">
-      <!-- 9 cards -->
-      <!-- card 1 -->
-      <article class="card" data-grid="1">
+    <section class="grid">
+      <!-- 9 cards wired for automation -->
+      <!-- 1 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid1_category" class="card-category">Kitchen</div>
           <div id="grid1_title" class="card-title">Swap with Product 1 title.</div>
@@ -283,7 +265,8 @@
         <a id="grid1_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="2">
+      <!-- 2 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid2_category" class="card-category">Home</div>
           <div id="grid2_title" class="card-title">Swap with Product 2 title.</div>
@@ -292,7 +275,8 @@
         <a id="grid2_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="3">
+      <!-- 3 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid3_category" class="card-category">Bathroom</div>
           <div id="grid3_title" class="card-title">Swap with Product 3 title.</div>
@@ -301,7 +285,8 @@
         <a id="grid3_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="4">
+      <!-- 4 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid4_category" class="card-category">Kitchen</div>
           <div id="grid4_title" class="card-title">Swap with Product 4 title.</div>
@@ -310,7 +295,8 @@
         <a id="grid4_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="5">
+      <!-- 5 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid5_category" class="card-category">Home</div>
           <div id="grid5_title" class="card-title">Swap with Product 5 title.</div>
@@ -319,7 +305,8 @@
         <a id="grid5_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="6">
+      <!-- 6 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid6_category" class="card-category">Bathroom</div>
           <div id="grid6_title" class="card-title">Swap with Product 6 title.</div>
@@ -328,7 +315,8 @@
         <a id="grid6_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="7">
+      <!-- 7 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid7_category" class="card-category">Kitchen</div>
           <div id="grid7_title" class="card-title">Swap with Product 7 title.</div>
@@ -337,7 +325,8 @@
         <a id="grid7_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="8">
+      <!-- 8 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid8_category" class="card-category">Home</div>
           <div id="grid8_title" class="card-title">Swap with Product 8 title.</div>
@@ -346,7 +335,8 @@
         <a id="grid8_url" href="#" class="card-link">View on Amazon</a>
       </article>
 
-      <article class="card" data-grid="9">
+      <!-- 9 -->
+      <article class="card">
         <div class="card-top">
           <div id="grid9_category" class="card-category">Bathroom</div>
           <div id="grid9_title" class="card-title">Swap with Product 9 title.</div>
@@ -360,21 +350,44 @@
       Built for <a href="https://www.tiktok.com/@holidaygadgethub" target="_blank">@holidaygadgethub</a> ·
       Auto-updated from Google Sheets.
     </div>
-  </main>
+  </div>
 
   <script>
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS26BnfDz1D71g-eAMl7AfNYeGuCgnFJmwTjj2TqLp_anG_qOe_MFzQr4dNFSPzFWwnn6hE3fc799Wz/pub?gid=708213954&single=true&output=csv";
 
+    function parseCSVLine(line) {
+      const out = [];
+      let cur = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === "," && !inQuotes) {
+          out.push(cur);
+          cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
     function parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
-      if (lines.length < 2) return null;
-      const headers = lines[0].split(",").map(h => h.trim());
-      const values = lines[1].split(","); // row 2 only
-      const obj = {};
-      headers.forEach((h, i) => {
-        obj[h] = (values[i] || "").replace(/^"|"$/g, "").replace(/""/g, '"');
+      if (!lines.length) return [];
+      const headers = parseCSVLine(lines[0]).map(h => h.trim());
+      return lines.slice(1).map(line => {
+        const vals = parseCSVLine(line);
+        const obj = {};
+        headers.forEach((h, i) => {
+          const v = vals[i] || "";
+          obj[h] = v.replace(/^"|"$/g, "").replace(/""/g, '"');
+        });
+        return obj;
       });
-      return obj;
     }
 
     function setText(id, value) {
@@ -387,25 +400,22 @@
     }
 
     fetch(CSV_URL)
-      .then(res => res.text())
+      .then(r => r.text())
       .then(text => {
-        const row = parseCSV(text);
-        if (!row) return;
+        const rows = parseCSV(text);
+        if (!rows.length) return;
+        const row = rows[0]; // first data row
 
         // Featured
         setText("featured_title", row.featured_title);
         setText("featured_headline", row.featured_headline || row.featured_description);
         setHref("featured_url", row.featured_url || "#");
 
-        // Grid cards 1–9
+        // Grid 1–9
         for (let i = 1; i <= 9; i++) {
-          const t = row[`grid${i}_title`];
-          const c = row[`grid${i}_category`];
-          const u = row[`grid${i}_url`];
-
-          setText(`grid${i}_title`, t);
-          setText(`grid${i}_category`, c);
-          setHref(`grid${i}_url`, u || "#");
+          setText(`grid${i}_title`, row[`grid${i}_title`] || "");
+          setText(`grid${i}_category`, row[`grid${i}_category`] || "");
+          setHref(`grid${i}_url`, row[`grid${i}_url`] || "#");
         }
       })
       .catch(err => console.error("CSV load error", err));
