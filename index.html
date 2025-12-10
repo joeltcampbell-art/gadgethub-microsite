@@ -352,73 +352,95 @@
     </div>
   </div>
 
-  <script>
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS26BnfDz1D71g-eAMl7AfNYeGuCgnFJmwTjj2TqLp_anG_qOe_MFzQr4dNFSPzFWwnn6hE3fc799Wz/pub?gid=708213954&single=true&output=csv";
+<script>
+  /* -----------------------------------------------------------
+     PHASE B — JSON-DRIVEN FEATURED PRODUCT
+     CSV SYSTEM DISABLED BUT PRESERVED FOR BACKUP
+  ----------------------------------------------------------- */
 
-    function parseCSVLine(line) {
-      const out = [];
-      let cur = "";
-      let inQuotes = false;
-      for (let i = 0; i < line.length; i++) {
-        const ch = line[i];
-        if (ch === '"') {
-          if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
-          else { inQuotes = !inQuotes; }
-        } else if (ch === "," && !inQuotes) {
-          out.push(cur);
-          cur = "";
-        } else {
-          cur += ch;
-        }
+  /*
+  // CSV SYSTEM (DISABLED)
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS26BnfDz1D71g-eAMl7AfNYeGuCgnFJmwTjj2TqLp_anG_qOe_MFzQr4dNFSPzFWwnn6hE3fc799Wz/pub?gid=708213954&single=true&output=csv";
+
+  function parseCSVLine(line) {
+    const out = [];
+    let cur = "";
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+        else { inQuotes = !inQuotes; }
+      } else if (ch === "," && !inQuotes) {
+        out.push(cur);
+        cur = "";
+      } else {
+        cur += ch;
       }
-      out.push(cur);
-      return out;
     }
+    out.push(cur);
+    return out;
+  }
 
-    function parseCSV(text) {
-      const lines = text.trim().split(/\r?\n/);
-      if (!lines.length) return [];
-      const headers = parseCSVLine(lines[0]).map(h => h.trim());
-      return lines.slice(1).map(line => {
-        const vals = parseCSVLine(line);
-        const obj = {};
-        headers.forEach((h, i) => {
-          const v = vals[i] || "";
-          obj[h] = v.replace(/^"|"$/g, "").replace(/""/g, '"');
-        });
-        return obj;
+  function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (!lines.length) return [];
+    const headers = parseCSVLine(lines[0]).map(h => h.trim());
+    return lines.slice(1).map(line => {
+      const vals = parseCSVLine(line);
+      const obj = {};
+      headers.forEach((h, i) => {
+        const v = vals[i] || "";
+        obj[h] = v.replace(/^"|"$/g, "").replace(/""/g, '"');
       });
-    }
+      return obj;
+    });
+  }
 
-    function setText(id, value) {
-      const el = document.getElementById(id);
-      if (el && value) el.textContent = value;
-    }
-    function setHref(id, value) {
-      const el = document.getElementById(id);
-      if (el && value) el.href = value;
-    }
+  // CSV LOADING LOGIC DISABLED
+  fetch(CSV_URL)
+    .then(r => r.text())
+    .then(text => {
+      const rows = parseCSV(text);
+      if (!rows.length) return;
+      const row = rows[0];
 
-    fetch(CSV_URL)
-      .then(r => r.text())
-      .then(text => {
-        const rows = parseCSV(text);
-        if (!rows.length) return;
-        const row = rows[0]; // first data row
+      setText("featured_title", row.featured_title);
+      setText("featured_headline", row.featured_headline || row.featured_description);
+      setHref("featured_url", row.featured_url || "#");
 
-        // Featured
-        setText("featured_title", row.featured_title);
-        setText("featured_headline", row.featured_headline || row.featured_description);
-        setHref("featured_url", row.featured_url || "#");
+      for (let i = 1; i <= 9; i++) {
+        setText(`grid${i}_title`, row[`grid${i}_title`] || "");
+        setText(`grid${i}_category`, row[`grid${i}_category`] || "");
+        setHref(`grid${i}_url`, row[`grid${i}_url`] || "#");
+      }
+    })
+    .catch(err => console.error("CSV load error", err));
+  */
 
-        // Grid 1–9
-        for (let i = 1; i <= 9; i++) {
-          setText(`grid${i}_title`, row[`grid${i}_title`] || "");
-          setText(`grid${i}_category`, row[`grid${i}_category`] || "");
-          setHref(`grid${i}_url`, row[`grid${i}_url`] || "#");
-        }
-      })
-      .catch(err => console.error("CSV load error", err));
-  </script>
+  /* -----------------------------------------------------------
+     PHASE B — ACTIVE SYSTEM (FEATURED.JSON)
+  ----------------------------------------------------------- */
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el && value) el.textContent = value;
+  }
+
+  function setHref(id, value) {
+    const el = document.getElementById(id);
+    if (el && value) el.href = value;
+  }
+
+  fetch('./data/featured.json')
+    .then(r => r.json())
+    .then(data => {
+      setText("featured_title", data.product_title);
+      setText("featured_headline", "");
+      setHref("featured_url", data.product_url);
+    })
+    .catch(err => console.error("JSON load error", err));
+</script>
+
 </body>
 </html>
