@@ -67,12 +67,6 @@
         object-fit: cover;
       }
 
-      .logo-fallback {
-        font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 0.04em;
-      }
-
       .title-wrap {
         display: flex;
         flex-direction: column;
@@ -92,7 +86,7 @@
         color: var(--muted);
       }
 
-      /* SECTION HEADERS */
+      /* SECTION HEADINGS */
 
       .section-heading {
         font-size: 13px;
@@ -122,21 +116,20 @@
       }
 
       .featured-image {
-  width: 72px;
-  min-width: 72px;
-  height: 72px;
-  border-radius: var(--radius-md);
-  overflow: hidden; /* important for rounded corners */
-  border: 1px solid rgba(148, 163, 184, 0.4);
-}
+        width: 72px;
+        min-width: 72px;
+        height: 72px;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
 
-.featured-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
+      .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
 
       .featured-text {
         display: flex;
@@ -172,6 +165,13 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #22c55e;
       }
 
       .btn-row {
@@ -267,12 +267,7 @@
         text-decoration: none;
       }
 
-      .dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        background: #22c55e;
-      }
+      /* FOOTER */
 
       .footer {
         margin-top: 26px;
@@ -308,10 +303,13 @@
         <div class="section-heading">Featured product</div>
         <article class="featured-card">
           <div class="featured-inner">
-<div class="featured-image">
-  <img id="featured_image" src="" alt="Featured product image" />
-</div>
-
+            <div class="featured-image">
+              <img
+                id="featured_image"
+                src=""
+                alt="Featured product image"
+              />
+            </div>
             <div class="featured-text">
               <div class="featured-title" id="featured_title">
                 Loading featured product...
@@ -353,17 +351,19 @@
         </div>
       </section>
 
-<footer class="footer">
-  <span>Amazon affiliate links. Prices and availability may change.</span>
-  <span>
-    Built by
-    <a href="https://www.tiktok.com/@holidaygadgehub"
-       target="_blank" rel="noopener noreferrer">
-      @holidaygadgehub
-    </a>
-  </span>
-</footer>
-
+      <!-- FOOTER -->
+      <footer class="footer">
+        <span>Amazon affiliate links. Prices and availability may change.</span>
+        <span>
+          Built by
+          <a
+            href="https://www.tiktok.com/@holidaygadgehub"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@holidaygadgehub</a
+          >
+        </span>
+      </footer>
     </main>
 
     <script>
@@ -404,25 +404,30 @@
         );
         setHref("featured_link", data.product_url || "#");
 
+        const imgEl = document.getElementById("featured_image");
+        if (imgEl && data.image_url) {
+          imgEl.src = data.image_url;
+          imgEl.alt = data.product_title || "Featured product";
+        }
+
         const ts = formatTimestamp(data.last_updated);
         if (ts) {
           setText("featured_timestamp", `Last updated: ${ts}`);
-
-          const imgEl = document.getElementById("featured_image");
-if (imgEl && data.image_url) {
-  imgEl.src = data.image_url;
-  imgEl.alt = data.product_title || "Featured product";
-}
-
         }
       }
 
-      function renderTrending(list) {
+      function renderTrending(trending) {
         const container = document.getElementById("trending_grid");
         if (!container) return;
         container.innerHTML = "";
 
-        if (!Array.isArray(list) || !list.length) {
+        const items = Array.isArray(trending?.items)
+          ? trending.items
+          : Array.isArray(trending)
+          ? trending
+          : [];
+
+        if (!items.length) {
           const msg = document.createElement("div");
           msg.className = "trend-card";
           msg.textContent = "Trending products will appear here.";
@@ -430,7 +435,7 @@ if (imgEl && data.image_url) {
           return;
         }
 
-        list.slice(0, 9).forEach((item) => {
+        items.slice(0, 9).forEach((item) => {
           const card = document.createElement("article");
           card.className = "trend-card";
 
