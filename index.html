@@ -407,6 +407,13 @@
         const ts = formatTimestamp(data.last_updated);
         if (ts) {
           setText("featured_timestamp", `Last updated: ${ts}`);
+
+          const imgEl = document.getElementById("featured_image");
+if (imgEl && data.image_url) {
+  imgEl.src = data.image_url;
+  imgEl.alt = data.product_title || "Featured product";
+}
+
         }
       }
 
