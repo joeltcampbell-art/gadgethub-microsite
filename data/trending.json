@@ -1,1 +1,58 @@
-{"items":[{"title":"Magnetic Multi-Tool Holder Bar","category":"Garage • Tools","url":"https://www.amazon.com/s?k=magnetic+tool+holder","meta":"Latest live post"}]}
+{
+  "items": [
+    {
+      "title": "Magnetic Multi-Tool Holder Bar",
+      "category": "Garage • Tools",
+      "url": "https://www.amazon.com/s?k=magnetic+tool+holder",
+      "badge": "Tap to shop"
+    },
+    {
+      "title": "Roll-Up Dish Drying Rack",
+      "category": "Kitchen",
+      "url": "https://www.amazon.com/s?k=roll+up+dish+drying+rack",
+      "badge": "Counter space saver"
+    },
+    {
+      "title": "Electric Spin Scrubber",
+      "category": "Cleaning",
+      "url": "https://www.amazon.com/s?k=electric+spin+scrubber",
+      "badge": "Deep clean fast"
+    },
+    {
+      "title": "Stackable Shoe Boxes",
+      "category": "Closet",
+      "url": "https://www.amazon.com/s?k=stackable+shoe+boxes",
+      "badge": "Upgrade shoe storage"
+    },
+    {
+      "title": "Mini Handheld Vacuum",
+      "category": "Car • Home",
+      "url": "https://www.amazon.com/s?k=mini+handheld+vacuum",
+      "badge": "Crumb killer"
+    },
+    {
+      "title": "Reusable Silicone Lint Roller",
+      "category": "Laundry",
+      "url": "https://www.amazon.com/s?k=reusable+silicone+lint+roller",
+      "badge": "Pet hair helper"
+    },
+    {
+      "title": "Adjustable Drawer Dividers",
+      "category": "Organization",
+      "url": "https://www.amazon.com/s?k=adjustable+drawer+dividers",
+      "badge": "Declutter drawers"
+    },
+    {
+      "title": "Magnetic Screen Door",
+      "category": "Home",
+      "url": "https://www.amazon.com/s?k=magnetic+screen+door",
+      "badge": "Hands-free entry"
+    },
+    {
+      "title": "Universal Socket Tool",
+      "category": "Tools",
+      "url": "https://www.amazon.com/s?k=universal+socket+tool",
+      "badge": "One socket to rule them"
+    }
+  ]
+}
