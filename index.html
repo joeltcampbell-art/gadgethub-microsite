@@ -178,6 +178,7 @@
         display: flex;
         gap: 10px;
         margin-top: 4px;
+        justify-content: flex-end; /* button on the right */
       }
 
       .btn-primary {
@@ -362,7 +363,7 @@
           <img src="logo.jpg" alt="Gadget Hub HQ logo" class="logo" />
         </div>
         <div class="title-wrap">
-          <h1>Gadget Hub HQ</h1>
+          <h1>GADGET HUB HQ</h1>
           <p>Amazon finds for real-life upgrades.</p>
         </div>
       </header>
@@ -509,7 +510,7 @@
           card.className = "trend-card";
 
           const tag = document.createElement("div");
-            tag.className = "trend-tag";
+          tag.className = "trend-tag";
           tag.textContent = (item.category || "Amazon find").toUpperCase();
           card.appendChild(tag);
 
