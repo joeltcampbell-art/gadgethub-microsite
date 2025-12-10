@@ -794,11 +794,11 @@
       }
     }
 
-    Promise.all([
-      fetch("./data/featured.json").then((r) => r.json()).catch(() => null),
-      fetch("./data/headline.json").then((r) => r.json()).catch(() => null),
-      fetch("./data/trending.json").then((r) => r.json()).catch(() => null),
-    ])
+Promise.all([
+  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/featured.json").then(r => r.json()).catch(() => null),
+  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/headline.json").then(r => r.json()).catch(() => null),
+  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/trending.json").then(r => r.json()).catch(() => null),
+])
       .then(([featured, headline, trending]) => {
         renderFeatured(featured);
         renderHeadline(headline);
