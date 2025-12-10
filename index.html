@@ -99,6 +99,7 @@
       /* FEATURED CARD */
 
       .featured-card {
+        position: relative; /* needed for top-right button */
         border-radius: var(--radius-lg);
         background: radial-gradient(circle at top left, #0f172a 0%, #020617 55%);
         border: 1px solid var(--border);
@@ -113,6 +114,7 @@
         display: flex;
         gap: 14px;
         align-items: center;
+        padding-right: 150px; /* leave room for button */
       }
 
       .featured-image {
@@ -174,11 +176,11 @@
         background: #22c55e;
       }
 
-      .btn-row {
+      .featured-action {
+        position: absolute;
+        top: 18px;
+        right: 18px;
         display: flex;
-        gap: 10px;
-        margin-top: 4px;
-        justify-content: flex-end; /* button on the right */
       }
 
       .btn-primary {
@@ -323,6 +325,7 @@
         .featured-inner {
           align-items: flex-start;
           gap: 10px;
+          padding-right: 120px;
         }
 
         .featured-image {
@@ -345,8 +348,11 @@
           gap: 4px;
         }
 
-        .btn-row {
-          margin-top: 4px;
+        .featured-action a.btn-primary {
+          padding: 6px 12px;
+          font-size: 12px;
+          gap: 4px;
+          box-shadow: 0 8px 18px rgba(8, 47, 73, 0.6);
         }
 
         .trending-grid {
@@ -390,15 +396,7 @@
             </div>
           </div>
 
-          <div class="featured-meta">
-            <span class="featured-pill">
-              <span class="dot"></span>
-              As seen on TikTok
-            </span>
-            <span id="featured_timestamp">Last updated: —</span>
-          </div>
-
-          <div class="btn-row">
+          <div class="featured-action">
             <a
               id="featured_link"
               class="btn-primary"
@@ -406,9 +404,17 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Shop this product</span>
+              <span>Shop</span>
               <span>↗</span>
             </a>
+          </div>
+
+          <div class="featured-meta">
+            <span class="featured-pill">
+              <span class="dot"></span>
+              As seen on TikTok
+            </span>
+            <span id="featured_timestamp">Last updated: —</span>
           </div>
         </article>
       </section>
