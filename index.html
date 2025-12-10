@@ -283,6 +283,75 @@
         color: var(--accent);
         text-decoration: none;
       }
+
+      /* MOBILE OPTIMIZATION */
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 20px 14px 28px;
+        }
+
+        .header {
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .logo-wrap {
+          width: 52px;
+          height: 52px;
+        }
+
+        .title-wrap h1 {
+          font-size: 20px;
+        }
+
+        .title-wrap p {
+          font-size: 12px;
+        }
+
+        .section-heading {
+          margin-top: 18px;
+          margin-bottom: 10px;
+          font-size: 12px;
+        }
+
+        .featured-card {
+          padding: 14px 14px 12px;
+        }
+
+        .featured-inner {
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .featured-image {
+          width: 60px;
+          min-width: 60px;
+          height: 60px;
+        }
+
+        .featured-title {
+          font-size: 16px;
+        }
+
+        .featured-caption {
+          font-size: 12px;
+        }
+
+        .featured-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+        }
+
+        .btn-row {
+          margin-top: 4px;
+        }
+
+        .trending-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -440,7 +509,7 @@
           card.className = "trend-card";
 
           const tag = document.createElement("div");
-          tag.className = "trend-tag";
+            tag.className = "trend-tag";
           tag.textContent = (item.category || "Amazon find").toUpperCase();
           card.appendChild(tag);
 
