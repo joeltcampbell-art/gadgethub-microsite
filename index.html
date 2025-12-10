@@ -1,559 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Gadget Hub HQ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #0f172a;
-      --bg-soft: #020617;
-      --card: #0b1120;
-      --card-soft: #020617;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.12);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border: #1f2937;
-      --radius-lg: 18px;
-      --radius-xl: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Helvetica Neue", Arial, sans-serif;
-      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .shell {
-      width: 100%;
-      max-width: 1100px;
-      background: linear-gradient(135deg, #020617 0%, #020617 40%, #020617 100%);
-      border-radius: 28px;
-      padding: 24px 24px 28px;
-      box-shadow:
-        0 20px 40px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(148, 163, 184, 0.08);
-      border: 1px solid rgba(148, 163, 184, 0.15);
-    }
-
-    .shell-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .shell-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .pill {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 45%, #0369a1 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
-    }
-
-    .pill span {
-      font-size: 18px;
-      font-weight: 700;
-      color: white;
-    }
-
-    .shell-title-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .shell-title-text h1 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #e5e7eb;
-    }
-
-    .shell-title-text span {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .shell-badge {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 11px;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .shell-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
-    }
-
-    .shell-main {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 18px;
-    }
-
-    @media (max-width: 860px) {
-      .shell-main {
-        grid-template-columns: minmax(0, 1fr);
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gadget Hub HQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --bg: #020617;
+        --bg-card: #020617;
+        --bg-card-soft: #020617;
+        --accent: #00c7ff;
+        --accent-soft: rgba(0, 199, 255, 0.15);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #1e293b;
+        --radius-lg: 18px;
+        --radius-md: 14px;
       }
-    }
 
-    .card {
-      border-radius: var(--radius-xl);
-      background: radial-gradient(
-          circle at top left,
-          rgba(56, 189, 248, 0.22),
-          transparent 55%
-        ),
-        linear-gradient(135deg, #020617 0%, #020617 60%, #020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      padding: 18px 18px 18px;
-      box-shadow:
-        0 14px 30px rgba(15, 23, 42, 0.8),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(
-        circle at top left,
-        rgba(56, 189, 248, 0.12),
-        transparent 60%
-      );
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-tag {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .card-tag-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.7);
-    }
-
-    .featured-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: #f9fafb;
-      margin: 0 0 6px;
-    }
-
-    .featured-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0 0 14px;
-    }
-
-    .featured-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .featured-badge {
-      font-size: 11px;
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .featured-button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 0;
-      cursor: pointer;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9 45%, #0369a1 100%);
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow:
-        0 10px 25px rgba(56, 189, 248, 0.32),
-        0 0 0 1px rgba(15, 23, 42, 0.75);
-      transition: transform 0.08s ease, box-shadow 0.08s ease,
-        filter 0.08s ease;
-      white-space: nowrap;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow:
-        0 16px 30px rgba(56, 189, 248, 0.45),
-        0 0 0 1px rgba(15, 23, 42, 0.75);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0);
-      box-shadow:
-        0 9px 18px rgba(56, 189, 248, 0.32),
-        0 0 0 1px rgba(15, 23, 42, 0.75);
-    }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(15, 23, 42, 0.9);
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .btn-ghost span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.8);
-    }
-
-    .featured-footer {
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    .featured-footer span {
-      white-space: nowrap;
-    }
-
-    .featured-footer strong {
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-
-    .headline-card {
-      border-radius: var(--radius-xl);
-      background: radial-gradient(
-          circle at top right,
-          rgba(56, 189, 248, 0.12),
-          transparent 55%
-        ),
-        linear-gradient(145deg, #020617 0%, #020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      padding: 16px 18px 16px;
-      box-shadow:
-        0 12px 26px rgba(15, 23, 42, 0.85),
-        0 0 0 1px rgba(15, 23, 42, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .headline-tag {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .headline-text {
-      font-size: 16px;
-      font-weight: 600;
-      color: #f9fafb;
-      margin: 0 0 10px;
-      line-height: 1.4;
-    }
-
-    .headline-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0;
-    }
-
-    .grid-section {
-      margin-top: 18px;
-    }
-
-    .grid-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .grid-header-left span {
-      display: block;
-    }
-
-    .grid-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: #e5e7eb;
-    }
-
-    .grid-subtitle {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .grid-badge {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 720px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      * {
+        box-sizing: border-box;
       }
-    }
 
-    @media (max-width: 520px) {
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top left, #020617 0, #000 50%);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
       }
-    }
 
-    .grid-item {
-      border-radius: 16px;
-      background: linear-gradient(145deg, #020617 0, #020617 100%);
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      box-shadow:
-        0 10px 20px rgba(15, 23, 42, 0.8),
-        0 0 0 1px rgba(15, 23, 42, 1);
-      padding: 10px 10px 11px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .grid-pill {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      color: var(--muted);
-    }
-
-    .grid-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      padding-right: 4px;
-    }
-
-    .grid-title-text {
-      font-size: 12px;
-      font-weight: 500;
-      color: #e5e7eb;
-      margin-bottom: 4px;
-      min-height: 32px;
-    }
-
-    .grid-category {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .grid-footer {
-      font-size: 10px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .grid-footer span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.85);
-      margin-right: 4px;
-      display: inline-block;
-    }
-
-    .grid-footer a {
-      font-size: 10px;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .grid-footer a:hover {
-      text-decoration: underline;
-    }
-
-    .empty-text {
-      font-size: 11px;
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    .skeleton {
-      opacity: 0.7;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        opacity: 0.45;
+      .page {
+        width: 100%;
+        max-width: 960px;
+        padding: 28px 20px 40px;
       }
-      50% {
-        opacity: 0.9;
+
+      /* HEADER */
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
       }
-      100% {
-        opacity: 0.45;
+
+      .logo-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 20%, #22d3ee, #0369a1 60%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
+          0 18px 45px rgba(15, 23, 42, 0.8);
       }
-    }
 
-    .logo-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+      .logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-.logo-img {
-  height: 34px;
-  width: auto;
-  border-radius: 999px;
-  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9), 
-              0 0 10px rgba(56, 189, 248, 0.25);
-}
+      .logo-fallback {
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.04em;
+      }
 
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <div class="shell-header">
-      <div class="shell-title-wrap">
+      .title-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .title-wrap h1 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .title-wrap p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* SECTION HEADERS */
+
+      .section-heading {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        margin: 26px 0 12px;
+      }
+
+      /* FEATURED CARD */
+
+      .featured-card {
+        border-radius: var(--radius-lg);
+        background: radial-gradient(circle at top left, #0f172a 0%, #020617 55%);
+        border: 1px solid var(--border);
+        padding: 18px 18px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+      }
+
+      .featured-inner {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .featured-image {
+        width: 72px;
+        min-width: 72px;
+        height: 72px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(145deg, #0f172a, #1e293b);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: var(--muted);
+        text-align: center;
+        padding: 6px;
+      }
+
+      .featured-text {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .featured-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .featured-caption {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .featured-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .featured-pill {
+        padding: 4px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        background: rgba(15, 23, 42, 0.9);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 16px;
+        border-radius: 999px;
+        border: none;
+        font-size: 13px;
+        font-weight: 500;
+        color: #0b1120;
+        background: linear-gradient(135deg, #00c7ff, #22d3ee);
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 12px 30px rgba(8, 47, 73, 0.8);
+      }
+
+      .btn-primary span:last-child {
+        font-size: 15px;
+      }
+
+      .btn-primary:active {
+        transform: translateY(1px);
+        box-shadow: 0 8px 22px rgba(8, 47, 73, 0.7);
+      }
+
+      /* TRENDING GRID */
+
+      .trending-grid {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      @media (max-width: 768px) {
+        .trending-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .header {
+          align-items: flex-start;
+        }
+
+        .trending-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .trend-card {
+        border-radius: var(--radius-md);
+        background: rgba(15, 23, 42, 0.94);
+        border: 1px solid var(--border);
+        padding: 12px 12px 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .trend-tag {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--muted);
+      }
+
+      .trend-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .trend-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .trend-link {
+        font-size: 11px;
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #22c55e;
+      }
+
+      .footer {
+        margin-top: 26px;
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <!-- HEADER -->
+      <header class="header">
         <div class="logo-wrap">
-          <img src="logo.jpg" alt="Gadget Hub logo" class="logo-img" />
+          <img src="logo.jpg" alt="Gadget Hub HQ logo" class="logo" />
         </div>
-        <div class="shell-title-text">
+        <div class="title-wrap">
           <h1>Gadget Hub HQ</h1>
-          <span>Amazon finds → TikTok → microsite → sales</span>
+          <p>Amazon finds for real-life upgrades.</p>
         </div>
-      </div>
-      <div class="shell-badge">
-        <span class="shell-badge-dot"></span>
-        <span id="header_status">Microsite automation: live</span>
-      </div>
-    </div>
+      </header>
 
-    <div class="shell-main">
-      <!-- LEFT: FEATURED PRODUCT -->
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-tag">
-            <span class="card-tag-dot"></span>
-            <span>Featured product</span>
+      <!-- FEATURED PRODUCT -->
+      <section>
+        <div class="section-heading">Featured product</div>
+        <article class="featured-card">
+          <div class="featured-inner">
+            <div class="featured-image" id="featured_image">
+              Product<br />image
+            </div>
+            <div class="featured-text">
+              <div class="featured-title" id="featured_title">
+                Loading featured product...
+              </div>
+              <div class="featured-caption" id="featured_caption">
+                Pulling details from your latest TikTok.
+              </div>
+            </div>
           </div>
-          <h2 id="featured_title" class="featured-title skeleton">
-            Loading featured product…
-          </h2>
-          <p id="featured_headline" class="featured-subtitle skeleton">
-            Swipe-stopper headline from your latest live TikTok.
-          </p>
 
           <div class="featured-meta">
-            <div class="featured-badge">
-              🔁 Auto-updated from your Link Schedule
-            </div>
-            <div class="featured-badge" id="featured_timestamp">
-              Last updated: —
-            </div>
+            <span class="featured-pill">
+              <span class="dot"></span>
+              As seen on TikTok
+            </span>
+            <span id="featured_timestamp">Last updated: —</span>
           </div>
 
-          <div class="featured-button-row">
+          <div class="btn-row">
             <a
-              id="featured_url"
+              id="featured_link"
               class="btn-primary"
               href="#"
               target="_blank"
@@ -562,251 +339,134 @@
               <span>Shop this product</span>
               <span>↗</span>
             </a>
-            <button class="btn-ghost" type="button" disabled>
-              <span class="dot"></span>
-              Auto-synced with your TikTok schedule
-            </button>
           </div>
+        </article>
+      </section>
 
-          <div class="featured-footer">
-            <span>
-              <strong>Tip:</strong> TikTok caption still says “Link in bio!” —
-              this page does the heavy lifting.
-            </span>
-            <span id="featured_meta_hint">Latest live post</span>
-          </div>
+      <!-- TRENDING GRID -->
+      <section>
+        <div class="section-heading">Trending Amazon products</div>
+        <div class="trending-grid" id="trending_grid">
+          <!-- Cards injected via JS -->
         </div>
-      </div>
+      </section>
 
-      <!-- RIGHT: HEADLINE / SWIPE STOPPER -->
-      <div class="headline-card">
-        <div class="card-inner">
-          <div class="headline-tag">Swipe-stopper line</div>
-          <p id="headline_text" class="headline-text skeleton">
-            Loading hook from your latest caption…
-          </p>
-          <p id="headline_meta" class="headline-sub">
-            Pulled from your latest live product. Keep captions focused on
-            problems solved and quick wins.
-          </p>
-        </div>
-      </div>
-    </div>
+      <footer class="footer">
+        <span>Auto-updated from Gadget Hub Link Schedule.</span>
+        <span
+          >Built for <a href="https://www.tiktok.com/@holidaygadgehub" target="_blank" rel="noopener noreferrer">@holidaygadgehub</a></span
+        >
+      </footer>
+    </main>
 
-    <!-- TRENDING GRID -->
-    <div class="grid-section">
-      <div class="grid-header">
-        <div class="grid-header-left">
-          <span class="grid-title">Trending Amazon products</span>
-          <span class="grid-subtitle" id="trending_subtitle">
-            Auto-rotating from your 9 most recent live posts.
-          </span>
-        </div>
-        <div class="grid-badge">Auto-updated • JSON-powered</div>
-      </div>
+    <script>
+      const DATA_BASE =
+        "https://joeltcampbell-art.github.io/gadgethub-microsite/data";
 
-      <div id="trending_grid" class="grid">
-        <!-- Filled by JS, placeholder skeletons -->
-        <div class="grid-item skeleton">
-          <div class="grid-pill">Queued</div>
-          <a href="#" class="grid-link">
-            <div class="grid-title-text">Loading product…</div>
-            <div class="grid-category">Amazon find</div>
-          </a>
-          <div class="grid-footer">
-            <span><span class="dot"></span>Waiting for automation</span>
-            <a href="#">Link coming soon</a>
-          </div>
-        </div>
-        <div class="grid-item skeleton">
-          <div class="grid-pill">Queued</div>
-          <a href="#" class="grid-link">
-            <div class="grid-title-text">Loading product…</div>
-            <div class="grid-category">Amazon find</div>
-          </a>
-          <div class="grid-footer">
-            <span><span class="dot"></span>Waiting for automation</span>
-            <a href="#">Link coming soon</a>
-          </div>
-        </div>
-        <div class="grid-item skeleton">
-          <div class="grid-pill">Queued</div>
-          <a href="#" class="grid-link">
-            <div class="grid-title-text">Loading product…</div>
-            <div class="grid-category">Amazon find</div>
-          </a>
-          <div class="grid-footer">
-            <span><span class="dot"></span>Waiting for automation</span>
-            <a href="#">Link coming soon</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el && value) el.textContent = value;
+      }
 
-  <script>
-    function setText(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (!value) return;
-      el.textContent = value;
-      el.classList.remove("skeleton");
-    }
+      function setHref(id, value) {
+        const el = document.getElementById(id);
+        if (el && value) el.href = value;
+      }
 
-    function setHref(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (!value) return;
-      el.href = value;
-    }
-
-    function formatTimestamp(iso) {
-      if (!iso) return "";
-      const d = new Date(iso);
-      if (isNaN(d.getTime())) return "";
-      return (
-        d.toLocaleDateString(undefined, {
+      function formatTimestamp(iso) {
+        if (!iso) return "";
+        const d = new Date(iso);
+        if (isNaN(d)) return "";
+        const opts = {
           month: "short",
-          day: "numeric",
-        }) +
-        " • " +
-        d.toLocaleTimeString(undefined, {
+          day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
+        };
+        return d.toLocaleString(undefined, opts);
+      }
+
+      function renderFeatured(data) {
+        if (!data) return;
+
+        setText("featured_title", data.product_title || "Featured Amazon find");
+        setText(
+          "featured_caption",
+          data.headline ||
+            "Tap below to shop this Amazon find featured in today’s TikTok."
+        );
+        setHref("featured_link", data.product_url || "#");
+
+        const ts = formatTimestamp(data.last_updated);
+        if (ts) {
+          setText("featured_timestamp", `Last updated: ${ts}`);
+        }
+      }
+
+      function renderTrending(list) {
+        const container = document.getElementById("trending_grid");
+        if (!container) return;
+        container.innerHTML = "";
+
+        if (!Array.isArray(list) || !list.length) {
+          const msg = document.createElement("div");
+          msg.className = "trend-card";
+          msg.textContent = "Trending products will appear here.";
+          container.appendChild(msg);
+          return;
+        }
+
+        list.slice(0, 9).forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "trend-card";
+
+          const tag = document.createElement("div");
+          tag.className = "trend-tag";
+          tag.textContent = (item.category || "Amazon find").toUpperCase();
+          card.appendChild(tag);
+
+          const title = document.createElement("div");
+          title.className = "trend-title";
+          title.textContent = item.title || "Amazon product";
+          card.appendChild(title);
+
+          const footer = document.createElement("div");
+          footer.className = "trend-footer";
+
+          const last = document.createElement("span");
+          last.style.fontSize = "11px";
+          last.style.color = "#9ca3af";
+          last.textContent = item.badge || "Tap to shop";
+          footer.appendChild(last);
+
+          const link = document.createElement("a");
+          link.className = "trend-link";
+          link.href = item.url || "#";
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "View on Amazon";
+          footer.appendChild(link);
+
+          card.appendChild(footer);
+          container.appendChild(card);
+        });
+      }
+
+      Promise.all([
+        fetch(`${DATA_BASE}/featured.json`).then((r) =>
+          r.ok ? r.json() : null
+        ),
+        fetch(`${DATA_BASE}/trending.json`).then((r) =>
+          r.ok ? r.json() : null
+        ),
+      ])
+        .then(([featured, trending]) => {
+          renderFeatured(featured);
+          renderTrending(trending);
         })
-      );
-    }
-
-    function renderFeatured(data) {
-      if (!data) return;
-      setText("featured_title", data.product_title || "No live product yet");
-      setHref("featured_url", data.product_url || "#");
-      if (data.headline) {
-        setText("featured_headline", data.headline);
-      } else {
-        setText(
-          "featured_headline",
-          "Swipe-stopper headline from your latest live TikTok."
-        );
-      }
-      const ts = formatTimestamp(data.last_updated);
-      const tsEl = document.getElementById("featured_timestamp");
-      if (tsEl && ts) {
-        tsEl.textContent = "Last updated: " + ts;
-      }
-    }
-
-    function renderHeadline(data) {
-      if (!data) return;
-      if (data.headline) {
-        setText("headline_text", data.headline);
-      } else {
-        setText(
-          "headline_text",
-          "Hook line will automatically sync from your latest caption."
-        );
-      }
-      const meta = document.getElementById("headline_meta");
-      if (meta && data.source_product_id) {
-        meta.textContent =
-          "Source: Product ID " +
-          data.source_product_id +
-          ". Keep captions simple and benefit-driven.";
-      }
-    }
-
-    function createGridItem(item, index) {
-      const div = document.createElement("div");
-      div.className = "grid-item";
-
-      const pill = document.createElement("div");
-      pill.className = "grid-pill";
-      pill.textContent = index === 0 ? "Newest" : "Trending";
-      div.appendChild(pill);
-
-      const link = document.createElement("a");
-      link.className = "grid-link";
-      link.href = item.url || "#";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-
-      const title = document.createElement("div");
-      title.className = "grid-title-text";
-      title.textContent = item.title || "Amazon product";
-
-      const cat = document.createElement("div");
-      cat.className = "grid-category";
-      cat.textContent = item.category || "Amazon find";
-
-      link.appendChild(title);
-      link.appendChild(cat);
-      div.appendChild(link);
-
-      const footer = document.createElement("div");
-      footer.className = "grid-footer";
-
-      const left = document.createElement("span");
-      const dot = document.createElement("span");
-      dot.className = "dot";
-      left.appendChild(dot);
-      left.appendChild(
-        document.createTextNode(item.meta || "Live in your Link Schedule")
-      );
-
-      const right = document.createElement("a");
-      right.href = item.url || "#";
-      right.target = "_blank";
-      right.rel = "noopener noreferrer";
-      right.textContent = "Open product";
-
-      footer.appendChild(left);
-      footer.appendChild(right);
-      div.appendChild(footer);
-
-      return div;
-    }
-
-    function renderTrending(data) {
-      const grid = document.getElementById("trending_grid");
-      if (!grid) return;
-
-      grid.innerHTML = "";
-
-      if (!data || !Array.isArray(data.items) || !data.items.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty-text";
-        empty.textContent =
-          "No trending items yet. Once your first 9 posts go live, this grid will auto-fill from your Link Schedule.";
-        grid.appendChild(empty);
-        return;
-      }
-
-      data.items.slice(0, 9).forEach((item, idx) => {
-        grid.appendChild(createGridItem(item, idx));
-      });
-
-      const subtitle = document.getElementById("trending_subtitle");
-      if (subtitle) {
-        subtitle.textContent =
-          "Auto-rotating from your " +
-          data.items.length +
-          " most recent live posts.";
-      }
-    }
-
-Promise.all([
-  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/featured.json").then(r => r.json()).catch(() => null),
-  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/headline.json").then(r => r.json()).catch(() => null),
-  fetch("https://joeltcampbell-art.github.io/gadgethub-microsite/data/trending.json").then(r => r.json()).catch(() => null),
-])
-      .then(([featured, headline, trending]) => {
-        renderFeatured(featured);
-        renderHeadline(headline);
-        renderTrending(trending);
-      })
-      .catch((err) => {
-        console.error("JSON load error", err);
-      });
-  </script>
-</body>
+        .catch((err) => {
+          console.error("Data load error", err);
+        });
+    </script>
+  </body>
 </html>
