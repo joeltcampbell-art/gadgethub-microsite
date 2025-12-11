@@ -2,110 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Gadget Hub – TikTok Finds</title>
+  <title>Gadget Hub – Debug</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --bg: #050816;
-      --card: #0b1120;
-      --accent: #00c7ff;
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --radius: 16px;
-    }
-    * { box-sizing: border-box; }
+    * { box-sizing:border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
-      display: flex;
-      flex-direction: column;
+      margin:0;
+      min-height:100vh;
+      background:#ffffff;
+      color:#000000;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      padding:16px;
     }
-    header {
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(148,163,184,0.35);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    h1 { margin:0 0 8px; }
+    #status { margin:8px 0; font-size:14px; }
+    #log, #rows {
+      white-space:pre-wrap;
+      border:1px solid #ccc;
+      padding:8px;
+      border-radius:4px;
+      max-height:35vh;
+      overflow:auto;
+      font-size:12px;
+      margin-bottom:12px;
     }
-    .brand { display:flex;align-items:center;gap:10px; }
-    .brand-logo{
-      width:32px;height:32px;border-radius:999px;
-      background:radial-gradient(circle at 30% 30%,#38bdf8,#0ea5e9 40%,#0369a1);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:18px;color:#020617;
-      box-shadow:0 0 22px rgba(56,189,248,0.75);
+  </style>
+</head>
+<body>
+  <h1>Gadget Hub – Debug View</h1>
+  <div id="status">Loading…</div>
+  <h2>Console log</h2>
+  <div id="log"></div>
+  <h2>First 5 parsed rows</h2>
+  <div id="rows"></div>
+
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    const SHEET_URL =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBqxZTKJrIcJ-00mMQDuA3ABa1hE7ifnWK8JsE_OIETCDV5mDGPpKyPsoSSCjARQRVxVK7GHj2caQF/pub?gid=1372860133&single=true&output=csv";
+
+    const statusEl = document.getElementById("status");
+    const logEl = document.getElementById("log");
+    const rowsEl = document.getElementById("rows");
+
+    function log(msg) {
+      console.log(msg);
+      logEl.textContent += msg + "\n";
     }
-    .brand-text{display:flex;flex-direction:column;gap:2px;}
-    .brand-title{font-size:18px;font-weight:700;letter-spacing:.03em;}
-    .brand-sub{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.12em;}
-    .badge{
-      padding:4px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.5);
-      background:rgba(15,23,42,.9);font-size:11px;color:var(--muted);
-      display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
-    }
-    .badge-dot{width:7px;height:7px;border-radius:999px;background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.9);}
-    main{
-      padding:18px 16px 26px;
-      max-width:1100px;width:100%;margin:0 auto;
-      flex:1;display:flex;flex-direction:column;
-    }
-    .hero{
-      margin-bottom:18px;display:flex;flex-wrap:wrap;
-      gap:12px;align-items:flex-start;justify-content:space-between;
-    }
-    .hero-text{max-width:520px;}
-    .hero-title{font-size:22px;font-weight:700;letter-spacing:.02em;margin:0 0 4px;}
-    .hero-title span{color:var(--accent);}
-    .hero-sub{font-size:13px;color:var(--muted);margin:0;}
-    .hero-side{font-size:11px;color:var(--muted);text-align:right;max-width:260px;}
-    .hero-side strong{color:var(--text);}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-      gap:16px;
-    }
-    .card{
-      background:radial-gradient(circle at top,#111827 0,#020617 80%);
-      border-radius:var(--radius);
-      border:1px solid rgba(148,163,184,.35);
-      padding:10px;display:flex;flex-direction:column;gap:8px;
-      box-shadow:0 16px 36px rgba(15,23,42,.9);
-      position:relative;overflow:hidden;
-    }
-    .card-thumb-wrap{
-      border-radius:14px;overflow:hidden;
-      background:radial-gradient(circle at center,#1e293b 0,#020617 85%);
-      height:170px;display:flex;align-items:center;justify-content:center;position:relative;
-    }
-    .card-thumb{width:100%;height:100%;object-fit:cover;display:block;}
-    .card-thumb-fallback{font-size:11px;color:var(--muted);text-align:center;padding:0 10px;}
-    .card-tag{
-      position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:999px;
-      background:rgba(15,23,42,.95);border:1px solid rgba(148,163,184,.6);
-      font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
-    }
-    .card-body{display:flex;flex-direction:column;gap:6px;}
-    .card-title{font-size:14px;font-weight:600;margin:0;line-height:1.4;}
-    .card-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);gap:8px;}
-    .chip{
-      padding:3px 8px;border-radius:999px;border:1px solid rgba(148,163,184,.5);
-      text-transform:uppercase;letter-spacing:.08em;font-size:10px;
-    }
-    .card-footer{margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      padding:7px 12px;border-radius:999px;border:none;font-size:12px;font-weight:500;
-      cursor:pointer;text-decoration:none;white-space:nowrap;
-      background:radial-gradient(circle at 30% 0,#22d3ee,#0ea5e9 40%,#0369a1);
-      color:#020617;box-shadow:0 12px 28px rgba(56,189,248,.55);
-      transition:transform .15s ease,box-shadow .15s ease;
-    }
-    .bt
+
+    statusEl.textContent = "Fetching CSV…";
+    log("Starting fetch: " + SHEET_URL);
+
+    Papa.parse(SHEET_URL, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        try {
+          log("Parse complete");
+          const rows = Array.isArray(results.data) ? results.data : [];
+          log("Total rows (including header): " + rows.length);
+
+          statusEl.textContent = "Parsed " + rows.length + " data rows.";
+
+          const preview = rows.slice(0, 5);
+          rowsEl.textContent = JSON.stringify(preview, null, 2);
+        } catch (e) {
+          statusEl.textContent = "Error in complete(): " + e.message;
+          log("Error in complete(): " + e.stack);
+        }
+      },
+      error: function (err) {
+        statusEl.textContent = "Papa.parse error: " + err.message;
+        log("Papa.parse error: " + err.message);
+      },
+    });
+  </script>
+</body>
+</html>
