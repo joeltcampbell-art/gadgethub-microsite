@@ -99,7 +99,7 @@
       /* FEATURED CARD */
 
       .featured-card {
-        position: relative; /* needed for top-right button */
+        position: relative;
         border-radius: var(--radius-lg);
         background: radial-gradient(circle at top left, #0f172a 0%, #020617 55%);
         border: 1px solid var(--border);
@@ -218,19 +218,10 @@
         gap: 14px;
       }
 
-      @media (max-width: 768px) {
+      /* 2 columns on anything below large desktop */
+      @media (max-width: 900px) {
         .trending-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 520px) {
-        .header {
-          align-items: flex-start;
-        }
-
-        .trending-grid {
-          grid-template-columns: 1fr;
         }
       }
 
@@ -353,10 +344,6 @@
           font-size: 12px;
           gap: 4px;
           box-shadow: 0 8px 18px rgba(8, 47, 73, 0.6);
-        }
-
-        .trending-grid {
-          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -511,7 +498,7 @@
           return;
         }
 
-        items.slice(0, 9).forEach((item) => {
+        items.slice(0, 12).forEach((item) => {
           const card = document.createElement("article");
           card.className = "trend-card";
 
