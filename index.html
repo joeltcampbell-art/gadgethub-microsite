@@ -209,6 +209,27 @@
         box-shadow: 0 8px 22px rgba(8, 47, 73, 0.7);
       }
 
+      /* Secondary button for trending cards */
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text);
+        background: rgba(15, 23, 42, 0.9);
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .btn-secondary:active {
+        transform: translateY(1px);
+      }
+
       /* TRENDING GRID */
 
       .trending-grid {
@@ -247,18 +268,10 @@
         font-weight: 500;
       }
 
-      .trend-footer {
+      .trend-action {
+        margin-top: 8px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-        margin-top: 6px;
-      }
-
-      .trend-link {
-        font-size: 11px;
-        color: var(--accent);
-        text-decoration: none;
+        justify-content: flex-end;
       }
 
       /* FOOTER */
@@ -512,24 +525,19 @@
           title.textContent = item.title || "Amazon product";
           card.appendChild(title);
 
-          const footer = document.createElement("div");
-          footer.className = "trend-footer";
+          const action = document.createElement("div");
+          action.className = "trend-action";
 
-          const last = document.createElement("span");
-          last.style.fontSize = "11px";
-          last.style.color = "#9ca3af";
-          last.textContent = item.badge || "Tap to shop";
-          footer.appendChild(last);
+          const btn = document.createElement("a");
+          btn.className = "btn-secondary";
+          btn.href = item.url || "#";
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+          btn.textContent = "Shop";
 
-          const link = document.createElement("a");
-          link.className = "trend-link";
-          link.href = item.url || "#";
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          link.textContent = "View on Amazon";
-          footer.appendChild(link);
+          action.appendChild(btn);
+          card.appendChild(action);
 
-          card.appendChild(footer);
           container.appendChild(card);
         });
       }
