@@ -1,398 +1,704 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Gadget Hub HQ</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      :root {
-        --bg: #020617;
-        --accent: #00c7ff;
-        --accent2: #22d3ee;
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --border: #1e293b;
-        --radius-lg: 18px;
-        --radius-md: 14px;
-      }
+<head>
+  <meta charset="utf-8" />
+  <title>Gadget Hub HQ – Amazon Finds</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020615;
+      --card: #050c1f;
+      --card-soft: #071124;
+      --accent: #00c7ff;
+      --accent-soft: rgba(0, 199, 255, 0.14);
+      --text: #f9fbff;
+      --muted: #9aa4c6;
+      --border-subtle: #101728;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-          "Segoe UI", sans-serif;
-        background: radial-gradient(circle at top left, #020617 0, #000 50%);
-        color: var(--text);
-        display: flex;
-        justify-content: center;
-      }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #031534 0, #020615 40%, #000 100%);
+      -webkit-font-smoothing: antialiased;
+    }
 
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    header img.logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    header .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    section h2 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Featured card */
+
+    .featured-card {
+      background: radial-gradient(circle at top left, #081c40, #050c1f 55%, #020615);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: 20px 22px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-main {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .featured-image-wrap {
+      flex: 0 0 auto;
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      background: #020615;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .featured-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .featured-title {
+      font-size: 18px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .featured-caption {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 460px;
+    }
+
+    .featured-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge-tiktok {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .badge-tiktok-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #16e88b;
+      box-shadow: 0 0 0 4px rgba(22, 232, 139, 0.2);
+    }
+
+    .featured-updated {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .featured-cta {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      min-width: 110px;
+    }
+
+    .shop-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      background: var(--accent);
+      color: #001321;
+      text-decoration: none;
+      box-shadow: var(--shadow-soft);
+      white-space: nowrap;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        background 0.12s ease;
+    }
+
+    .shop-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(0, 199, 255, 0.45);
+      background: #1ad4ff;
+    }
+
+    .shop-pill:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shop-pill-icon {
+      margin-left: 6px;
+      font-size: 14px;
+    }
+
+    /* Trending grid */
+
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .trend-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 14px 13px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 130px;
+    }
+
+    .trend-category {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .trend-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .trend-caption {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      max-height: 38px;
+      overflow: hidden;
+    }
+
+    .trend-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .trend-footer .shop-pill {
+      padding: 7px 16px;
+      font-size: 13px;
+      box-shadow: 0 10px 24px rgba(0, 199, 255, 0.4);
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 768px) {
       .page {
-        width: 100%;
-        max-width: 960px;
-        padding: 28px 20px 40px;
+        padding: 16px 14px 30px;
       }
 
-      /* HEADER */
-
-      .header {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 32px;
+      header h1 {
+        font-size: 18px;
       }
-
-      .logo-wrap {
-        width: 64px;
-        height: 64px;
-        border-radius: 999px;
-        background: radial-gradient(circle at 30% 20%, #22d3ee, #0369a1 60%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
-          0 18px 45px rgba(15, 23, 42, 0.8);
-      }
-
-      .logo {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .title-wrap h1 {
-        margin: 0;
-        font-size: 24px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .title-wrap p {
-        margin: 0;
-        font-size: 13px;
-        color: var(--muted);
-      }
-
-      /* SECTION HEADINGS */
-
-      .section-heading {
-        font-size: 13px;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        color: var(--muted);
-        margin: 26px 0 12px;
-      }
-
-      /* FEATURED CARD */
 
       .featured-card {
-        position: relative;
-        border-radius: var(--radius-lg);
-        background: radial-gradient(circle at top left, #0f172a 0%, #020617 55%);
-        border: 1px solid var(--border);
-        padding: 18px;
-        display: flex;
         flex-direction: column;
-        gap: 14px;
-        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+        align-items: flex-start;
       }
 
-      .featured-inner {
-        display: flex;
-        gap: 14px;
-        align-items: center;
-        padding-right: 150px;
-      }
-
-      .featured-image {
-        width: 72px;
-        height: 72px;
-        border-radius: var(--radius-md);
-        overflow: hidden;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-      }
-
-      .featured-image img {
+      .featured-main {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .featured-title {
-        font-size: 18px;
-        font-weight: 600;
       }
 
       .featured-caption {
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.45;
+        max-width: none;
       }
 
-      .featured-meta {
-        display: flex;
-        justify-content: space-between;
-        font-size: 11px;
-        color: var(--muted);
+      .featured-cta {
+        align-items: flex-start;
+        width: 100%;
       }
 
-      .featured-pill {
-        padding: 4px 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        background: rgba(15, 23, 42, 0.9);
-        display: inline-flex;
-        gap: 6px;
-        align-items: center;
-      }
-
-      .dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        background: #22c55e;
-      }
-
-      .featured-action {
-        position: absolute;
-        top: 18px;
-        right: 18px;
-      }
-
-      .btn-primary,
-      .btn-secondary {
-        display: inline-flex;
-        align-items: center;
+      .featured-cta .shop-pill {
+        width: 100%;
         justify-content: center;
-        border-radius: 999px;
-        gap: 6px;
-        cursor: pointer;
-        text-decoration: none;
-        color: #0b1120;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        box-shadow: 0 12px 30px rgba(8, 47, 73, 0.8);
       }
-
-      .btn-primary {
-        padding: 9px 16px;
-        font-size: 13px;
-      }
-
-      .btn-secondary {
-        padding: 6px 12px;
-        font-size: 11px;
-      }
-
-      /* TRENDING GRID */
 
       .trending-grid {
-        margin-top: 10px;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+    }
 
-      @media (max-width: 900px) {
-        .trending-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
+    @media (max-width: 480px) {
       .trend-card {
-        border-radius: var(--radius-md);
-        background: rgba(15, 23, 42, 0.94);
-        border: 1px solid var(--border);
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .trend-tag {
-        font-size: 11px;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-      }
-
-      .trend-title {
-        font-size: 14px;
-        font-weight: 500;
+        min-height: 120px;
       }
 
       .trend-caption {
-        font-size: 12px;
-        color: var(--muted);
+        max-height: 44px;
       }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="logo.jpg" alt="Gadget Hub HQ logo" class="logo" />
+      <div class="title-block">
+        <h1>Gadget Hub HQ</h1>
+        <div class="subtitle">Smart Amazon finds for real-life upgrades.</div>
+      </div>
+    </header>
 
-      .trend-action {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 6px;
-      }
-
-      /* FOOTER */
-
-      .footer {
-        margin-top: 26px;
-        font-size: 11px;
-        color: var(--muted);
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-
-      /* MOBILE */
-
-      @media (max-width: 640px) {
-        .page {
-          padding: 20px 14px 28px;
-        }
-
-        .featured-inner {
-          padding-right: 120px;
-        }
-
-        .btn-primary {
-          padding: 6px 12px;
-          font-size: 12px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="page">
-      <!-- HEADER -->
-      <header class="header">
-        <div class="logo-wrap">
-          <img src="logo.jpg" class="logo" alt="Logo" />
-        </div>
-        <div class="title-wrap">
-          <h1>GADGET HUB HQ</h1>
-          <p>Amazon finds for real-life upgrades.</p>
-        </div>
-      </header>
-
-      <!-- FEATURED -->
-      <section>
-        <div class="section-heading">Featured product</div>
-        <article class="featured-card">
-          <div class="featured-inner">
-            <div class="featured-image">
-              <img id="featured_image" src="" alt="" />
+    <!-- FEATURED PRODUCT -->
+    <section aria-labelledby="featured-heading">
+      <h2 id="featured-heading">Featured product</h2>
+      <article class="featured-card">
+        <div class="featured-main">
+          <div class="featured-image-wrap">
+            <img
+              id="featured_image"
+              class="featured-image"
+              src=""
+              alt="Featured product image"
+            />
+          </div>
+          <div class="featured-text">
+            <div id="featured_title" class="featured-title">
+              Loading featured product…
             </div>
-            <div>
-              <div id="featured_title" class="featured-title">Loading…</div>
-              <div id="featured_caption" class="featured-caption"></div>
+            <div id="featured_caption" class="featured-caption">
+              Your latest TikTok product will appear here.
+            </div>
+            <div class="featured-meta-row">
+              <div class="badge-tiktok">
+                <span class="badge-tiktok-dot"></span>
+                <span>As seen on TikTok</span>
+              </div>
+              <div id="featured_updated" class="featured-updated"></div>
             </div>
           </div>
+        </div>
+        <div class="featured-cta">
+          <a
+            id="featured_link"
+            class="shop-pill"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Shop
+            <span class="shop-pill-icon">↗</span>
+          </a>
+        </div>
+      </article>
+    </section>
 
-          <div class="featured-action">
-            <a id="featured_link" class="btn-primary" href="#" target="_blank">
-              Shop ↗
-            </a>
-          </div>
-
-          <div class="featured-meta">
-            <span class="featured-pill">
-              <span class="dot"></span> As seen on TikTok
-            </span>
-            <span id="featured_timestamp">Last updated: —</span>
+    <!-- TRENDING GRID -->
+    <section aria-labelledby="trending-heading">
+      <h2 id="trending-heading">Trending Amazon products</h2>
+      <div class="trending-grid">
+        <!-- 12 cards, filled via JS -->
+        <!-- Row 1 -->
+        <article class="trend-card" data-trend="1">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
           </div>
         </article>
-      </section>
 
-      <!-- TRENDING -->
-      <section>
-        <div class="section-heading">Trending Amazon products</div>
-        <div id="trending_grid" class="trending-grid"></div>
-      </section>
+        <article class="trend-card" data-trend="2">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
 
-      <!-- FOOTER -->
-      <footer class="footer">
-        <span>Amazon affiliate links. Prices may change.</span>
-        <span>Built by <a href="https://www.tiktok.com/@holidaygadgehub"> @holidaygadgehub</a></span>
-      </footer>
-    </main>
+        <article class="trend-card" data-trend="3">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
 
-    <script>
-      const DATA_BASE =
-        "https://joeltcampbell-art.github.io/gadgethub-microsite/data";
+        <!-- Row 2 -->
+        <article class="trend-card" data-trend="4">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
 
-      function setText(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-      }
+        <article class="trend-card" data-trend="5">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
 
-      function setHref(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.href = value;
-      }
+        <article class="trend-card" data-trend="6">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
 
-      function formatTimestamp(iso) {
-        if (!iso) return "";
-        const d = new Date(iso);
-        if (isNaN(d)) return "";
+        <!-- Row 3 -->
+        <article class="trend-card" data-trend="7">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+
+        <article class="trend-card" data-trend="8">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+
+        <article class="trend-card" data-trend="9">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+
+        <!-- Row 4 -->
+        <article class="trend-card" data-trend="10">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+
+        <article class="trend-card" data-trend="11">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+
+        <article class="trend-card" data-trend="12">
+          <div class="trend-category">Amazon find</div>
+          <div class="trend-title">Loading…</div>
+          <div class="trend-caption"></div>
+          <div class="trend-footer">
+            <a
+              class="shop-pill trend-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Shop</a
+            >
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span>Amazon affiliate links. Prices and availability may change.</span>
+      <span>Built by <a href="https://www.tiktok.com/@holidaygadgethub" target="_blank" rel="noopener noreferrer">@holidaygadgethub</a></span>
+    </footer>
+  </div>
+
+  <script>
+    (async function () {
+      // Helper: safe text
+      const setText = (el, value) => {
+        if (el && value != null && value !== "") el.textContent = value;
+      };
+
+      // Helper: simple date formatting
+      const formatTimestamp = (raw) => {
+        if (!raw) return "";
+        const d = new Date(raw);
+        if (isNaN(d.getTime())) return raw;
         return d.toLocaleString(undefined, {
           month: "short",
-          day: "2-digit",
-          hour: "2-digit",
+          day: "numeric",
+          hour: "numeric",
           minute: "2-digit",
         });
+      };
+
+      /* ========= FEATURED ========= */
+
+      try {
+        const res = await fetch("data/featured.json", { cache: "no-store" });
+        const json = await res.json();
+        const f = Array.isArray(json) ? json[0] : json;
+
+        const title =
+          f.product_title || f.title || f["2"] || "Featured product";
+        const url =
+          f.product_url || f.url || f["3"] || "#";
+        const caption =
+          f.headline || f.caption || f["7"] || "";
+        const image =
+          f.image_url || f.image || f.thumbnail || "";
+        const updated =
+          f.last_updated || f.updated_at || f.updated || "";
+
+        const titleEl = document.getElementById("featured_title");
+        const capEl = document.getElementById("featured_caption");
+        const imgEl = document.getElementById("featured_image");
+        const linkEl = document.getElementById("featured_link");
+        const updatedEl = document.getElementById("featured_updated");
+
+        setText(titleEl, title);
+        setText(capEl, caption);
+        if (imgEl && image) {
+          imgEl.src = image;
+        } else if (imgEl) {
+          imgEl.style.display = "none";
+        }
+        if (linkEl && url) {
+          linkEl.href = url;
+        }
+        if (updatedEl && updated) {
+          updatedEl.textContent = "Last updated: " + formatTimestamp(updated);
+        }
+      } catch (err) {
+        console.error("Featured load error", err);
       }
 
-      function renderFeatured(data) {
-        if (!data) return;
-        setText("featured_title", data.product_title);
-        setText("featured_caption", data.headline);
-        setHref("featured_link", data.product_url);
+      /* ========= TRENDING ========= */
 
-        const img = document.getElementById("featured_image");
-        img.src = data.image_url;
+      try {
+        const res = await fetch("data/trending.json", { cache: "no-store" });
+        const json = await res.json();
+        const rawItems = json.items || json || [];
 
-        const ts = formatTimestamp(data.last_updated);
-        setText("featured_timestamp", `Last updated: ${ts}`);
-      }
+        const items = rawItems.map((it) => ({
+          title: it.title || it.product_title || it["2"] || "",
+          url: it.url || it.product_url || it["3"] || "#",
+          caption: it.caption || it.headline || it["7"] || "",
+          category: it.category || it["14"] || "Amazon find",
+        }));
 
-      function renderTrending(trending) {
-        const grid = document.getElementById("trending_grid");
-        grid.innerHTML = "";
+        items.slice(0, 12).forEach((item, idx) => {
+          const card = document.querySelector(
+            `[data-trend="${idx + 1}"]`
+          );
+          if (!card) return;
 
-        const items = trending.items || trending || [];
-        items.slice(0, 12).forEach((item) => {
-          const card = document.createElement("div");
-          card.className = "trend-card";
+          const catEl = card.querySelector(".trend-category");
+          const titleEl = card.querySelector(".trend-title");
+          const capEl = card.querySelector(".trend-caption");
+          const linkEl = card.querySelector(".trend-link");
 
-          card.innerHTML = `
-            <div class="trend-tag">${(item.category || "Amazon Find").toUpperCase()}</div>
-            <div class="trend-title">${item.title}</div>
-            <div class="trend-caption">${item.caption || ""}</div>
-            <div class="trend-action">
-              <a class="btn-secondary" href="${item.url}" target="_blank">Shop</a>
-            </div>
-          `;
+          setText(catEl, item.category || "Amazon find");
+          setText(titleEl, item.title || "Amazon find");
+          setText(capEl, item.caption || "");
 
-          grid.appendChild(card);
+          if (linkEl && item.url) {
+            linkEl.href = item.url;
+          } else if (linkEl) {
+            linkEl.href = "#";
+          }
         });
+      } catch (err) {
+        console.error("Trending load error", err);
       }
-
-      Promise.all([
-        fetch(`${DATA_BASE}/featured.json`).then((r) => r.json()),
-        fetch(`${DATA_BASE}/trending.json`).then((r) => r.json()),
-      ]).then(([featured, trending]) => {
-        renderFeatured(featured);
-        renderTrending(trending);
-      });
-    </script>
-  </body>
+    })();
+  </script>
+</body>
 </html>
