@@ -2,42 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>TEST 123</title>
+  <title>Gadget Hub – Simple List</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #050816;
-      --card: #020617;
-      --accent: #00c7ff;
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --radius: 16px;
+</head>
+<body style="margin:0;padding:16px;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#ffffff;color:#000000;">
+  <h1>Gadget Hub – Simple Product List</h1>
+  <p id="status">Loading products…</p>
+  <ul id="list"></ul>
+
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    const SHEET_URL =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBqxZTKJrIcJ-00mMQDuA3ABa1hE7ifnWK8JsE_OIETCDV5mDGPpKyPsoSSCjARQRVxVK7GHj2caQF/pub?gid=1372860133&single=true&output=csv";
+
+    const statusEl = document.getElementById("status");
+    const listEl = document.getElementById("list");
+
+    function safeParseFeatured(raw) {
+      if (!raw || typeof raw !== "string") return {};
+      try { return JSON.parse(raw); } catch { return {}; }
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(148,163,184,0.35);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .brand { display:flex;align-items:center;gap:10px; }
-    .brand-logo{
-      width:32px;height:32px;border-radius:999px;
-      background:radial-gradient(circle at 30% 30%,#38bdf8,#0ea5e9 40%,#0369a1);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size
+
+    Papa.parse(SHEET_URL, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        const rows = Array.isArray(results.data) ? results.data : [];
+        const withTitle = rows.filter(r => (r["Product Title"] || "").trim());
+        statusEl.textContent = "Found " + withTitle.length + " products.";
+
+        withTitle.forEach((row, index) => {
+          const li = document.createElement("li");
+          const title = row["Product Title"] || "Untitled product";
+          const fullUrl = (row["Full URL"] || "").trim();
+          const featured = safeParseFeatured(row["Featured JSON"]);
+          const urlFromJson = (featured.product_url || "").trim();
+          const finalUrl = fullUrl || urlFromJson;
+
+          if (finalUrl) {
+            const a = document.createElement("a");
+            a.href = finalUrl;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.textContent = `${index + 1}. ${title}`;
+            li.appendChild(a);
+          } else {
+            li.textContent = `${index + 1}. ${title} (no link yet)`;
+          }
+
+          listEl.appendChild(li);
+        });
+      },
+      error: function (err) {
+        statusEl.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
